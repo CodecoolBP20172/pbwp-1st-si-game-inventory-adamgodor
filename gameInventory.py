@@ -55,8 +55,10 @@ def print_table(inventory, order="unordered"):
         make_order(ordered_list)
 
 def import_inventory(inventory, file_name="test_inventory.csv"):
-    additional_loot = open(file_name, "r")
-    cont = additional_loot.read().rstrip().split(",")
+    additional_loot = open("test_inventory.csv", "r")
+    cont = additional_loot.read().strip().split(",")
+    cont = [x.strip(' ')for x in cont]
+    cont = [x.strip('\t')for x in cont]
     added_items = cont
     add_to_inventory(inventory, added_items)
     additional_loot.close()
