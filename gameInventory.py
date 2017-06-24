@@ -54,8 +54,13 @@ def print_table(inventory, order="unordered"):
     elif order == "count,asc":
         make_order(ordered_list)
 
-def import_inventory(inventory, filename="import_inventory.csv"):
-    pass
+def import_inventory(inventory, file_name="test_inventory.csv"):
+    additional_loot = open(file_name, "r")
+    cont = additional_loot.read().rstrip().split(",")
+    added_items = cont
+    add_to_inventory(inventory, added_items)
+    additional_loot.close()
+    return inventory
 
 # Exports the inventory into a .csv file.
 # if the filename argument is None it creates and overwrites a file
