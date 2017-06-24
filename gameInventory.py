@@ -6,8 +6,6 @@ def display_inventory(inventory):
     item_count = list(inventory.values())
     print("Total number of items: %d" % sum(item_count))
 
-
-
 def add_to_inventory(inventory, added_items):
     for x in added_items:
         if x in inventory:
@@ -17,8 +15,6 @@ def add_to_inventory(inventory, added_items):
         else:
             inventory.update({x:1})
     return inventory
-
-
 
 def print_table(inventory, order="unordered"):
     # make sure the table is organised, even if there is a high item number, like a million gold coin
@@ -64,9 +60,15 @@ def import_inventory(inventory, file_name="test_inventory.csv"):
     additional_loot.close()
     return inventory
 
-# Exports the inventory into a .csv file.
-# if the filename argument is None it creates and overwrites a file
-# called "export_inventory.csv". The file format is the same plain text
-# with comma separated values (CSV).
-def export_inventory(inventory, filename="export_inventory.csv"):
-    pass
+def export_inventory(inventory, filename="test_inventory_export.csv"):
+    file = open("test_inventory_export.csv", "w")
+    raw_item_list = []
+    for key, value in inventory.items():
+        raw_item_list.append(key.split(",")*value)
+    single_list = []
+    for item in raw_item_list:
+        for l in item:
+            single_list.append(l)
+    items_in_string = ",".join(single_list)
+    file.write(items_in_string)
+    file.close()
