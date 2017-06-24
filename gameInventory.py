@@ -1,38 +1,65 @@
-# This is the file where you must work. Write code in the functions, create new functions, 
-# so they work according to the specification
 
-# Displays the inventory.
 def display_inventory(inventory):
-    pass
+    print("Invetory")
+    for key,value in inventory.items():
+        print (str(value)+" " + key)
+    item_count = list(inventory.values())
+    print("Total number of items: %d" % sum(item_count))
 
 
-# Adds to the inventory dictionary a list of items from added_items.
+
 def add_to_inventory(inventory, added_items):
-    pass
+    for x in added_items:
+        if x in inventory:
+            a = inventory.get(x)
+            a +=1
+            inventory[x] = a
+        else:
+            inventory.update({x:1})
+    return inventory
 
 
-# Takes your inventory and displays it in a well-organized table with 
-# each column right-justified. The input argument is an order parameter (string)
-# which works as the following:
-# - None (by default) means the table is unordered
-# - "count,desc" means the table is ordered by count (of items in the inventory) 
-#   in descending order
-# - "count,asc" means the table is ordered by count in ascending order
-def print_table(inventory, order=None):
-    pass
 
+def print_table(inventory, order="unordered"):
+    # make sure the table is organised, even if there is a high item number, like a million gold coin
+    a = len(str(max(list(inventory))))
+    b = len("count")
+    if a <= b:
+        bigest_number = b
+    else:
+        bigest_number = a
+    # define variables
+    longest_item = len(max(inventory.keys(), key =len))
+    if order == "unordered":
+        ordered_list= inventory.items()
+    if order == "count,desc":
+        ordered_list = sorted(inventory.items(), key= lambda inventory: inventory[1], reverse = 1)
+    if order == "count,asc":
+        ordered_list = sorted(inventory.items(), key= lambda inventory: inventory[1], reverse = 0)
+    # make the ordered / unordered table
+    def make_order(ordered_list):
+        print("Inventory:")
+        print("Count".rjust(bigest_number)+"   "+"Item name".rjust(longest_item))
+        print('-'*(bigest_number+longest_item+3))
+        for key,value in ordered_list:
+            print(str(value).rjust(bigest_number)+"   "+key.rjust(longest_item))
+        print('-'*(bigest_number+longest_item+3))
+        item_count = list(inventory.values())
+        print("Total number of items: %d" % sum(item_count))
+    # the main program
+    if order == "unordered":
+        make_order(ordered_list)
+    elif order == "count,desc":
+        make_order(ordered_list)
+    elif order == "count,asc":
+        make_order(ordered_list)
 
-# Imports new inventory items from a file
-# The filename comes as an argument, but by default it's 
-# "import_inventory.csv". The import automatically merges items by name.
-# The file format is plain text with comma separated values (CSV).
 def import_inventory(inventory, filename="import_inventory.csv"):
     pass
 
-
 # Exports the inventory into a .csv file.
 # if the filename argument is None it creates and overwrites a file
-# called "export_inventory.csv". The file format is the same plain text 
+# called "export_inventory.csv". The file format is the same plain text
 # with comma separated values (CSV).
 def export_inventory(inventory, filename="export_inventory.csv"):
     pass
